@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  pentaho:
+    image: dgraselli/pentaho-biserver:9.0
+    ports:
+      - "8080:8080"
+
+  pentaho_mysql:
+    image: mysql:5.7
+    ports:
+     - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: bdm
+
+  pentaho_phpmyadmin:
+    depends_on:
+      - pentaho_mysql
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '6030:80'
+    environment:
+      PMA_HOST: pentaho_mysql
